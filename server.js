@@ -205,7 +205,65 @@ const addDepartment = () => {
         });
 };
 
+// Update employee role
+const updateEmployee = () => {
+    connection.query(`SELECT * FROM roles`, (err, results) => {
+        if (err) throw err;
+        const rolesArray = [];
+        results.forEach(item => {
+            rolesArray.push(item.title)
+        });
+        connection.query(`SELECT first_name, last_name FROM employee`, (err, results) => {
+            if (err) throw err;
+            const namesArray = [];
+            results.forEach(item => {
+                namesArray.push(item.first_name);
+                namesArray.push(item.last_name);
+            });
+            const fullNameArray = [];
+            for (let i = 0; i < namesArray.length; i += 2) {
+                if (!namesArray[i + 1])
+                break
+                fullNameArray.push(`${namesArray[i]} ${namesArray[i + 1]}`)
+            }
+            inquirer.prompt([
+                {
+                    type: 'list',
+                    name: 'name_select',
+                    message: 'Please select an employee you would like to update',
+                    choices: fullNameArray
+                },
+                {
+                    type: 'list',
+                    name: 'role_select',
+                    message: 'Please select a role you would like your employee to change to:',
+                    choices: rolesArray
+                }
+            ]).then((data) => {
+                    let role_id;
+                    for (let i = 0; i < rolesArray.length; i++) {
+                        if (data.role_select === rolesArray[i]) {
+                            role_id = i + 1;
+                        }
+                    };
+                    const selectedNameArr = data.name_select.split(" ");
+                    const lastName = selectedNameArr.pop();
+                    const firstName = selectedNameArr[0];
 
+                    connection.query(`UPDATE employee SET role_id = ? WHERE first_name = ? AND last_name = ?`,
+                                [role_id, firstName, lastName],
+                                function (err, results) {
+                                    if (err) throw err;
+                                    console.log('Employee updated!');
+                                    promptUser();
+                                }
+                            );
+                        });
+                    }
+                );
+            }
+        );
+};
 
 
 promptUser();
