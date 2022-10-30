@@ -6,7 +6,7 @@ const cTable = require('console.table');
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'Kairmuun2017',
     database: 'employees'
 });
 
@@ -92,12 +92,12 @@ const addEmployee = () => {
             {
                 name: 'firstName',
                 type: 'input',
-                message: 'What is the first name?',
+                message: "Please enter employee's first name",
             },
             {
                 name: 'lastName',
                 type: 'input',
-                message: 'What is the last name?',
+                message: "Please enter employee's last name",
             },
             {
                 name: 'role',
@@ -110,7 +110,7 @@ const addEmployee = () => {
                     let newEmpArr = [...new Set(empArr)];
                     return newEmpArr;
                 },
-                message: 'What is the role?'
+                message: "Please enter employee's role"
             }
         ]).then(data => {
             let chosenRole;
@@ -161,7 +161,7 @@ const addRole = () => {
                     }
                     return newRoleArr;
                 },
-                message: 'What department is this new role under?',
+                message: 'Which department does this role fall under?',
             }
         ]).then(data => {
             let chosenDepartment;
@@ -230,13 +230,13 @@ const updateEmployee = () => {
                 {
                     type: 'list',
                     name: 'name_select',
-                    message: 'Please select an employee you would like to update',
+                    message: 'Which employee would you like to update?',
                     choices: fullNameArray
                 },
                 {
                     type: 'list',
                     name: 'role_select',
-                    message: 'Please select a role you would like your employee to change to:',
+                    message: 'Select the new role for this employee:',
                     choices: rolesArray
                 }
             ]).then((data) => {
