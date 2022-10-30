@@ -2,6 +2,9 @@
 ## Description
 This is an command-line application that was created from the scratch using Node.js, Inquirer, and MySQL to manage a company's employee database.
 
+## User guide
+You must provide your own mysql password in the connection to DB code in server.js as it has been taken off to protect my privacy. You must also install npm i inquirer@8.2.4, npm i console.table --save.
+
 ## User Story
 AS A business owner
 I WANT to be able to view and manage the departments, roles, and employees in my company
